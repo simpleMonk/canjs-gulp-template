@@ -3,8 +3,33 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>CanJS gulp template</title>
+    <link rel="stylesheet" type="text/css" href="app.css" media="all"/>
+    <script src="bundle.js"></script>
+
 </head>
 <body>
- Hello World!
+<ul id='todos'></ul>
+<input id='editor'/>
+
+<div id="simple"></div>
+<div id="myElement"></div>
+<script type='text/mustache' id='todosMustache'>
+
+<!-- bind to changes in the todo list -->
+{{#todos}}
+    <li {{data 'todo'}}>
+        <input type="checkbox" class="complete" {{#if complete}}checked{{/if}}/>
+        <span class="{{#if complete}}done{{/if}}">
+            {{name}}
+        </span>
+        <!-- a destroy link -->
+        <a href="javascript://" class='destroy'>X</a>
+    </li>
+{{/todo}}
+
+
+
+</script>
 </body>
+
 </html>

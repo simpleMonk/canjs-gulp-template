@@ -22,7 +22,9 @@ gulp.task('copy-all-files', function (cb) {
 });
 
 gulp.task('copy-js-files', function () {
-	gulp.src(config.src + "/**/*.js")
+	var files = config.vendor;
+	files.push(config.src + "/app/**/*.js");
+	gulp.src(files)
 		.pipe(concat("bundle.js"))
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
@@ -59,8 +61,8 @@ gulp.task('copy-html', function () {
 		});
 });
 
-gulp.task('prepare-dev', function (cb) {
-	runSequence('clean-dev', 'copy-all-files', cb);
+gulp.task('prepare-dev', ['clean-dev'], function (cb) {
+	runSequence('copy-all-files', cb);
 });
 
 gulp.task('watch', function () {
