@@ -43,9 +43,10 @@ gulp.task('copy-js-files', ['lint-js-files'], function () {
 		});
 });
 
-gulp.task('copy-spec-files', ['lint-spec-files'], function () {
+gulp.task('copy-spec-files', ['lint-spec-files', 'copy-fixtures'], function () {
 	var files = config.vendorjs;
 	files.push(config.src + "/app/**/*.js");
+	files.push(config.spec + "/config/*.js");
 	files.push(config.spec + "/**/*.js");
 
 	gulp.src(files)
@@ -106,6 +107,18 @@ gulp.task('copy-html', function () {
 		.pipe(connect.reload())
 		.on('end', function () {
 			gutil.log('successfully copied index.html');
+		})
+		.on('error', function (err) {
+			gutil.log(err);
+		});
+});
+
+gulp.task('copy-fixtures', function () {
+	gulp.src(config.spec + "/**/*.html")
+		.pipe(gulp.dest(config.development + "/spec"))
+		.pipe(connect.reload())
+		.on('end', function () {
+			gutil.log('successfully copied fixtures');
 		})
 		.on('error', function (err) {
 			gutil.log(err);
