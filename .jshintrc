@@ -1,0 +1,16 @@
+{
+	"extends": ".jshintrc-base",
+	"node": true,
+	"browser": true,
+	"globals": {
+		"describe": false,
+		"it": false,
+		"beforeEach": false,
+		"afterEach": false,
+		"inject": false,
+		"ddescribe": false,
+		"iit": false,
+		"can": false,
+		"$": false
+	}
+}

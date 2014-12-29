@@ -6,24 +6,26 @@ var gutil = require('gulp-util');
 var connect = require('gulp-connect');
 var concat = require('gulp-concat');
 var concatcss = require('gulp-concat-css');
+var jshint = require('gulp-jshint');
+var sass = require('gulp-sass');
 
 var config = require('./tasks/config.js');
 var clean = require('./tasks/clean.js').clean;
-
 var watcher = require('./tasks/watcher.js');
 require('./tasks/webserver.js');
 
-gulp.task('clean-dev', function () {
-	clean(config.development);
+gulp.task('clean-dev', function (cb) {
+	clean(config.development, cb);
 });
 
 gulp.task('copy-all-files', function (cb) {
 	runSequence('copy-js-files', 'copy-style', 'copy-html', cb);
 });
 
-gulp.task('copy-js-files', function () {
-	var files = config.vendor;
+gulp.task('copy-js-files', ['lint-js-files'], function () {
+	var files = config.vendorjs;
 	files.push(config.src + "/app/**/*.js");
+
 	gulp.src(files)
 		.pipe(concat("bundle.js"))
 		.pipe(gulp.dest(config.development))
@@ -36,8 +38,22 @@ gulp.task('copy-js-files', function () {
 		});
 });
 
+gulp.task('lint-js-files', function () {
+	gulp.src(config.src + "/app/**/*.js")
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
+
+});
+
 gulp.task('copy-style', function () {
-	gulp.src(config.src + "/**/*.css")
+	var files = [];
+	files.push(config.vendor + "/**/*.scss");
+	files.push(config.vendor + "/**/*.css");
+	files.push(config.src + "/**/*.scss");
+	files.push(config.src + "/**/*.css");
+
+	gulp.src(files)
+		.pipe(sass())
 		.pipe(concatcss('app.css'))
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())

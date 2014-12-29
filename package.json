@@ -24,9 +24,13 @@
     "gulp-jshint": "^1.9.0",
     "gulp-livereload": "^3.0.2",
     "gulp-rimraf": "^0.1.1",
+    "gulp-sass": "^1.2.4",
     "gulp-util": "^3.0.1",
     "gulp-watch": "^3.0.0",
+    "jshint": "^2.5.11",
+    "jshint-stylish": "^1.0.0",
     "multi-glob": "^0.4.0",
+    "rimraf": "^2.2.8",
     "run-sequence": "^1.0.2",
     "vinyl-source-stream": "^1.0.0"
   }
