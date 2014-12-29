@@ -8,6 +8,9 @@ var concat = require('gulp-concat');
 var concatcss = require('gulp-concat-css');
 var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
+var uglify = require('gulp-uglify');
+var gzip = require('gulp-gzip');
+
 
 var config = require('./tasks/config.js');
 var clean = require('./tasks/clean.js').clean;
@@ -27,6 +30,7 @@ gulp.task('copy-js-files', ['lint-js-files'], function () {
 	files.push(config.src + "/app/**/*.js");
 
 	gulp.src(files)
+		.pipe(uglify())
 		.pipe(concat("bundle.js"))
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
