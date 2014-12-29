@@ -11,6 +11,7 @@
 		"ddescribe": false,
 		"iit": false,
 		"can": false,
-		"$": false
+		"$": false,
+		"chai": false
 	}
 }

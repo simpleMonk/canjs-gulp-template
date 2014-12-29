@@ -1,6 +1,5 @@
 $(function () {
 	"use strict";
-
 	can.Component.extend({
 		tag: "my-element",
 		template: "<div can-click='clickMe'>Hello!-{{ count}}</div>",

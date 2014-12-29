@@ -10,7 +10,8 @@ var config = {
 		"./src/vendor/js/can.jquery.js",
 		"./src/vendor/js/can.object.js",
 		"./src/vendor/js/can.fixture.js"
-	]
+	],
+	"spec": "./spec"
 
 };
 

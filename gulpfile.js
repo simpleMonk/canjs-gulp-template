@@ -23,7 +23,7 @@ gulp.task('clean-dev', function (cb) {
 });
 
 gulp.task('copy-all-files', function (cb) {
-	runSequence('copy-js-files', 'copy-style', 'copy-html', cb);
+	runSequence('copy-js-files', 'copy-style', 'copy-html', 'copy-spec-files', cb);
 });
 
 gulp.task('copy-js-files', ['lint-js-files'], function () {
@@ -43,8 +43,36 @@ gulp.task('copy-js-files', ['lint-js-files'], function () {
 		});
 });
 
+gulp.task('copy-spec-files', ['lint-spec-files'], function () {
+	var files = config.vendorjs;
+	files.push(config.src + "/app/**/*.js");
+	files.push(config.spec + "/**/*.js");
+
+	gulp.src(files)
+		.pipe(concat("spec.js"))
+		.pipe(gulp.dest(config.development + "/spec"))
+		.pipe(connect.reload())
+		.on('end', function () {
+			gutil.log('successfully copied spec files');
+		})
+		.on('error', function (err) {
+			gutil.log(err);
+		});
+});
+
 gulp.task('lint-js-files', function () {
 	gulp.src(config.src + "/app/**/*.js")
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
+
+});
+
+gulp.task('lint-spec-files', function () {
+	var files = [];
+	files.push(config.src + "/app/**/*.js");
+	files.push(config.spec + "/**/*.js");
+
+	gulp.src(files)
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'));
 
@@ -76,7 +104,7 @@ gulp.task('copy-html', function () {
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
 		.on('end', function () {
-			gutil.log('successfully copied css files');
+			gutil.log('successfully copied index.html');
 		})
 		.on('error', function (err) {
 			gutil.log(err);
@@ -88,7 +116,7 @@ gulp.task('prepare-dev', ['clean-dev'], function (cb) {
 });
 
 gulp.task('watch', function () {
-	watcher([config.src], function () {
+	watcher([config.src, config.spec], function () {
 		gulp.start('prepare-dev');
 	});
 });
