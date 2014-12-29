@@ -127,10 +127,10 @@ $(function () {
 		},
 		'click': function () {
 			//alert('clicked');
-			console.log("Clicked");
+			//console.log("Clicked");
 		},
 		'mouseover': function (elem, evt) {
-			console.log("elem", evt, elem);
+			//console.log("elem", evt, elem);
 		}
 	});
 
@@ -142,7 +142,7 @@ $(function () {
 			this.editor.element.hide();
 			new Todos("#todos");
 			new SimpleControl("#simple");
-			var template = can.view.mustache("<my-element count={{&count}}></my-element>");
+			var template = can.view.mustache("<my-element count={{count}}></my-element>");
 			$('#myElement').html(template({count: 45}));
 		},
 		"{can.route} id": function (route, ev, newVal) {
@@ -181,5 +181,7 @@ $(function () {
 
 // create routing controller
 	new Routing(document.body);
+
+	can.route.ready();
 
 });
