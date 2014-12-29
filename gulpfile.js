@@ -10,6 +10,7 @@ var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var gzip = require('gulp-gzip');
+var minifyCSS = require('gulp-minify-css');
 
 
 var config = require('./tasks/config.js');
@@ -59,6 +60,7 @@ gulp.task('copy-style', function () {
 	gulp.src(files)
 		.pipe(sass())
 		.pipe(concatcss('app.css'))
+		.pipe(minifyCSS())
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
 		.on('end', function () {
