@@ -12,5 +12,4 @@ describe("module:todo", function () {
 		expect(can.VERSION).to.equal("2.1.4");
 	});
 
-
 });

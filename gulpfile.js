@@ -70,6 +70,7 @@ gulp.task('lint-js-files', function () {
 gulp.task('lint-spec-files', function () {
 	var files = [];
 	files.push(config.src + "/app/**/*.js");
+	files.push("!./spec/config/**");
 	files.push(config.spec + "/**/*.js");
 
 	gulp.src(files)
