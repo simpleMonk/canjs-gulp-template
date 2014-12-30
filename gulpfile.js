@@ -27,11 +27,12 @@ gulp.task('copy-all-files', function (cb) {
 });
 
 gulp.task('copy-js-files', ['lint-js-files'], function () {
-	var files = config.vendorjs;
-	files.push(config.src + "/app/**/*.js");
+	var srcFiles = config.vendorjs;
+	srcFiles.push(config.src + "/app/**/*.js");
+	srcFiles.push("!./spec/**/*.js");
 
-	gulp.src(files)
-		.pipe(uglify())
+	gulp.src(srcFiles)
+		//.pipe(uglify())
 		.pipe(concat("bundle.js"))
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
@@ -44,12 +45,12 @@ gulp.task('copy-js-files', ['lint-js-files'], function () {
 });
 
 gulp.task('copy-spec-files', ['lint-spec-files', 'copy-fixtures'], function () {
-	var files = config.vendorjs;
-	files.push(config.src + "/app/**/*.js");
-	files.push(config.spec + "/config/*.js");
-	files.push(config.spec + "/**/*.js");
+	var specFiles = config.vendorjs;
+	specFiles.push(config.src + "/app/**/*.js");
+	specFiles.push(config.spec + "/config/*.js");
+	specFiles.push(config.spec + "/**/*.js");
 
-	gulp.src(files)
+	gulp.src(specFiles)
 		.pipe(concat("spec.js"))
 		.pipe(gulp.dest(config.development + "/spec"))
 		.pipe(connect.reload())
@@ -69,25 +70,25 @@ gulp.task('lint-js-files', function () {
 });
 
 gulp.task('lint-spec-files', function () {
-	var files = [];
-	files.push(config.src + "/app/**/*.js");
-	files.push("!./spec/config/**");
-	files.push(config.spec + "/**/*.js");
+	var lintSpecFiles = [];
+	lintSpecFiles.push(config.src + "/app/**/*.js");
+	lintSpecFiles.push("!./spec/config/**");
+	lintSpecFiles.push(config.spec + "/**/*.js");
 
-	gulp.src(files)
+	gulp.src(lintSpecFiles)
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'));
 
 });
 
 gulp.task('copy-style', function () {
-	var files = [];
-	files.push(config.vendor + "/**/*.scss");
-	files.push(config.vendor + "/**/*.css");
-	files.push(config.src + "/**/*.scss");
-	files.push(config.src + "/**/*.css");
+	var styleFiles = [];
+	styleFiles.push(config.vendor + "/**/*.scss");
+	styleFiles.push(config.vendor + "/**/*.css");
+	styleFiles.push(config.src + "/**/*.scss");
+	styleFiles.push(config.src + "/**/*.css");
 
-	gulp.src(files)
+	gulp.src(styleFiles)
 		.pipe(sass())
 		.pipe(concatcss('app.css'))
 		.pipe(minifyCSS())
