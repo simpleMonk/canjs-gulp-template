@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <title>CanJS gulp template</title>
     <link rel="stylesheet" type="text/css" href="app.css" media="all"/>
-    <script src="./bundle.js"></script>
+    <script id="todoList" type="text/mustache">
+    <ul>
+    {{# todos}}
+      <li {{data 'todo'}}>{{shortDescription}}</li>
+    {{/ todos}}
+    </ul>
 
+    </script>
+
+    <script src="./bundle.js"></script>
 </head>
 <body>
-One
-<div id="myElement"></div>
-<hr>
-Two
-<div id="myElementAnother"></div>
-</body>
+<div id="title"></div>
+<div id="todoListView"></div>
+<input id='editTodoItem' type='text'/>
 
+</body>
 </html>
