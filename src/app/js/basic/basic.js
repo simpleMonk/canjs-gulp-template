@@ -22,6 +22,7 @@
 				var self = this;
 				Todo.findAll({}, function (todos) {
 					self.element.html(can.view(self.options.view, {todos: todos}));
+					self.element.fadeIn("slow");
 				});
 			},
 			'li click': function (element, event) {
@@ -29,6 +30,7 @@
 				// get the model
 				var todo = li.data('todo');
 				li.trigger('selected', todo);
+				li.attr('style', 'color:red');
 			}
 
 		});
